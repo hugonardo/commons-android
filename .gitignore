@@ -1,0 +1,63 @@
+# Mac OSx
+.*.swp
+._*
+.DS_Store
+
+# Code versioner
+.hg
+.lock-wscript
+.svn
+.wafpickle-*
+CVS
+
+# Eclipse
+.project
+.classpath
+.settings
+
+# Forçando a inclusão de arquivos que quero propagar
+!/.idea/dictionaries
+!/.idea/codeStyleSettings.xml
+!/.idea/inspectionProfiles/Project_Default.xml
+
+# IDEA/Android Studio project files, because
+# the project can be imported from settings.gradle
+.idea/*
+*.iml
+
+
+# Old-style IDEA project files
+*.ipr
+*.iws
+
+# built application files
+*.apk
+
+# files for the dex VM
+*.dex
+
+# generated files
+bin/
+gen/
+out/
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Windows thumbnail db
+thumbs.db
+
+# Gradle cache
+.gradle
+
+#Maven
+target
+release.properties
+pom.xml.*
+
+# Sandbox stuff
+_sandbox
+
+session_analytics.tap
+session_analytics_to_send/

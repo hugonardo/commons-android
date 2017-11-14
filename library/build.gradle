@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+android {
+    compileSdkVersion Integer.parseInt(compile_sdk_version)
+
+    compileOptions {
+        sourceCompatibility "${java_source_compatibility}"
+        targetCompatibility "${java_target_compatibility}"
+    }
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(min_sdk_version)
+        targetSdkVersion Integer.parseInt(target_sdk_version)
+        versionCode Integer.parseInt(app_version_code)
+        versionName "${app_version_code}"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    api "com.android.support:appcompat-v7:${android_support_version}"
+    api "com.android.support:design:${android_support_version}"
+    api "com.android.support:recyclerview-v7:${android_support_version}"
+    api "com.android.support.constraint:constraint-layout:${constraint_layout_version}"
+    api "com.github.hugonardo:EasyRecyclerView:${easy_recyclerview_version}"
+    api "com.yqritc:recyclerview-flexibledivider:${recycler_view_flexible_divider_version}"
+    api "com.github.eltos:simpledialogfragment:${simple_dialog_fragment_version}"
+    api "pub.devrel:easypermissions:${easypermissions_version}"
+    api "com.jakewharton.timber:timber:${timber_version}"
+    api "com.squareup.leakcanary:leakcanary-android:${leakcanary_version}"
+
+    implementation files('libs/SQLiteStudioRemote.jar')
+    implementation "com.android.support:multidex:${multidex_support_version}"
+    implementation "com.github.hugonardo:commons-java:${commons_java_version}"
+
+    compileOnly "javax.annotation:jsr250-api:${jsr250_version}"
+    api "com.google.dagger:dagger:${dagger_version}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${dagger_version}"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:${dagger_version}"
+
+    api "com.google.dagger:dagger-android-support:${dagger_version}"
+    annotationProcessor "com.google.dagger:dagger-android-processor:${dagger_version}"
+    testAnnotationProcessor "com.google.dagger:dagger-android-processor:${dagger_version}"
+
+    api "com.f2prateek.dart:dart:${dart_version}"
+    annotationProcessor "com.f2prateek.dart:dart-processor:${dart_version}"
+
+    api "com.f2prateek.dart:henson:${dart_version}"
+    annotationProcessor "com.f2prateek.dart:henson-processor:${dart_version}"
+
+    api "com.evernote:android-state:${android_state_version}"
+    annotationProcessor "com.evernote:android-state-processor:${android_state_version}"
+
+    testImplementation "org.robolectric:robolectric:${robolectric_version}"
+    testImplementation "org.mockito:mockito-core:${mockito_version}"
+    testImplementation "junit:junit:${junit_version}"
+    testImplementation "org.hamcrest:hamcrest-junit:${hamcrest_version}"
+}
