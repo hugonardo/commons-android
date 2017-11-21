@@ -8,7 +8,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 import com.squareup.leakcanary.LeakCanary;
-import dagger.android.DaggerApplication;
+import dagger.android.support.DaggerApplication;
 import javax.inject.Inject;
 import net.hugonardo.android.commons.di.ReleaseMode;
 import timber.log.Timber;
