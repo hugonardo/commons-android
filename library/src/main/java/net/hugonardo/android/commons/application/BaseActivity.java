@@ -6,6 +6,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.PluralsRes;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,11 +14,22 @@ import android.view.MenuItem;
 import com.evernote.android.state.StateSaver;
 import com.f2prateek.dart.Dart;
 import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasFragmentInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import java.util.List;
+import javax.inject.Inject;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public abstract class BaseActivity extends AppCompatActivity
-        implements EasyPermissions.PermissionCallbacks {
+        implements EasyPermissions.PermissionCallbacks, HasFragmentInjector, HasSupportFragmentInjector {
+
+    @Inject
+    DispatchingAndroidInjector<android.app.Fragment> mFrameworkFragmentInjector;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> mSupportFragmentInjector;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +43,11 @@ public abstract class BaseActivity extends AppCompatActivity
     protected void onSaveInstanceState(Bundle outState) {
         StateSaver.saveInstanceState(this, outState);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public AndroidInjector<android.app.Fragment> fragmentInjector() {
+        return mFrameworkFragmentInjector;
     }
 
     @Override
@@ -64,6 +81,11 @@ public abstract class BaseActivity extends AppCompatActivity
         if (actionBar != null) {
             actionBar.setTitle(resId);
         }
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return mSupportFragmentInjector;
     }
 
     /**
