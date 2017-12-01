@@ -5,19 +5,18 @@ import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import net.hugonardo.android.commons.logging.Logger;
+import timber.log.Timber;
 
 public abstract class FeatherAccountAuthenticator extends AbstractAccountAuthenticator {
 
-    protected final Context mContext;
-
-    private Logger mLogger;
+    private final Context mContext;
 
     private final TokenTypes mTokenTypes = TokenTypes.getSingleInstance();
 
@@ -183,23 +182,21 @@ public abstract class FeatherAccountAuthenticator extends AbstractAccountAuthent
         // the server for an appropriate AuthToken.
         final AccountManager am = AccountManager.get(mContext);
 
-        //noinspection MissingPermission
+        @SuppressLint("MissingPermission")
         String authToken = am.peekAuthToken(account, authTokenType);
 
         log("FeatherAccountAuthenticator#getAuthToken() > peekAuthToken returned: " + authToken);
 
         // Lets give another try to authenticate the user
         if (TextUtils.isEmpty(authToken)) {
-            //noinspection MissingPermission
+            @SuppressLint("MissingPermission")
             final String password = am.getPassword(account);
             if (password != null) {
                 try {
                     log("FeatherAccountAuthenticator#getAuthToken() > re-authenticating with the existing password");
                     authToken = signIn(account.name, password, authTokenType);
                 } catch (Exception e) {
-                    if (mLogger != null) {
-                        mLogger.warning(e, e.getMessage());
-                    }
+                    Timber.w(e);
                 }
             }
         }
@@ -307,10 +304,6 @@ public abstract class FeatherAccountAuthenticator extends AbstractAccountAuthent
     @NonNull
     protected abstract Class<? extends FeatherAccountAuthenticatorActivity> provideAccountAuthenticatorActivityClass();
 
-    protected void setLogger(Logger logger) {
-        mLogger = logger;
-    }
-
     /**
      * Utilizado pelo {@link #getAuthToken(AccountAuthenticatorResponse, Account, String, Bundle)}.
      * Deve ser fornecido um método de autenticação do usuário.
@@ -327,9 +320,7 @@ public abstract class FeatherAccountAuthenticator extends AbstractAccountAuthent
             @NonNull String authTokenType);
 
     private void log(String message) {
-        if (mLogger != null) {
-            mLogger.verbose(message);
-        }
+        Timber.v(message);
     }
 
     @NonNull
